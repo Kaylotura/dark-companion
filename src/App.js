@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import gemTable from './tables/gemTable'
+import itemTables from './tables/itemTables'
 import faithTables from './tables/faithTables'
 import {ButtonToolbar, Button} from 'react-bootstrap'
 
@@ -7,7 +7,7 @@ class App extends Component {
   constructor () {
     super()
     this.state = {
-      currentGem: 'pancakes'
+      currentGem: ''
     }
     this.rollDie = this.rollDie.bind(this)
     this.rollDice = this.rollDice.bind(this)
@@ -27,7 +27,6 @@ class App extends Component {
   }
   generateGem () {
     let gemClass
-    let gemName
     let gemValue
     // Step 1: figure out just how good of a gem it is.
     let valueDie = this.rollDie(100)
@@ -51,16 +50,12 @@ class App extends Component {
       gemValue = (this.rollDice(2, 4) * 1000)
     }
     // Step 2: Determine gem-place die, then roll it to determine gem type
-    let gemPlaceDie = gemTable[gemClass].length
+    let gemPlaceDie = itemTables.gemTable[gemClass].length
     let gemPlace = (this.rollDie(gemPlaceDie) - 1)
-    if (Array.isArray(gemTable[gemClass][gemPlace])) {
-      let gemVariableDie = gemTable[gemClass][gemPlace].length
-      let gemVariable = (this.rollDie(gemVariableDie) - 1)
-      gemName = gemTable[gemClass][gemPlace][gemVariable]
-    } else {
-      gemName = gemTable[gemClass][gemPlace]
-    }
-    // Step 3: Put it all together?
+    let gemVariableDie = itemTables.gemTable[gemClass][gemPlace].length
+    let gemVariable = (this.rollDie(gemVariableDie) - 1)
+    let gemName = itemTables.gemTable[gemClass][gemPlace][gemVariable]
+        // Step 3: Put it all together?
     this.setState({currentGem: `A ${gemName} worth ${gemValue} gp`})
   }
   render () {
