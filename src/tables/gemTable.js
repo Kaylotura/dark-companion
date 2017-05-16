@@ -11,7 +11,7 @@
  * Created by kaylo on 4/19/2017.
  */
 
-const JSONGems = [
+const gemTable = [
   // GemClass 0
   [
     // Agate gemVariable
@@ -128,4 +128,4 @@ const JSONGems = [
   ]
 ]
 
-export default JSONGems
+export default gemTable

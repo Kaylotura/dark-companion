@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import JSONGems from './JSONGems'
+import gemTable from './tables/gemTable'
+import faithTables from './tables/faithTables'
 import {ButtonToolbar, Button} from 'react-bootstrap'
 
 class App extends Component {
@@ -50,14 +51,14 @@ class App extends Component {
       gemValue = (this.rollDice(2, 4) * 1000)
     }
     // Step 2: Determine gem-place die, then roll it to determine gem type
-    let gemPlaceDie = JSONGems[gemClass].length
+    let gemPlaceDie = gemTable[gemClass].length
     let gemPlace = (this.rollDie(gemPlaceDie) - 1)
-    if (Array.isArray(JSONGems[gemClass][gemPlace])) {
-      let gemVariableDie = JSONGems[gemClass][gemPlace].length
+    if (Array.isArray(gemTable[gemClass][gemPlace])) {
+      let gemVariableDie = gemTable[gemClass][gemPlace].length
       let gemVariable = (this.rollDie(gemVariableDie) - 1)
-      gemName = JSONGems[gemClass][gemPlace][gemVariable]
+      gemName = gemTable[gemClass][gemPlace][gemVariable]
     } else {
-      gemName = JSONGems[gemClass][gemPlace]
+      gemName = gemTable[gemClass][gemPlace]
     }
     // Step 3: Put it all together?
     this.setState({currentGem: `A ${gemName} worth ${gemValue} gp`})
@@ -73,6 +74,12 @@ class App extends Component {
           'Gem Me Baby'
         </Button>
         <p>{this.state.currentGem}</p>
+        <p>This is a God</p>
+        <p>{faithTables['godsByAlignmentByDomain']['CG']['Arcana']}</p>
+        <p>This is an alignment</p>
+        <p>{faithTables['alignments'][(this.rollDie(9) - 1)]}</p>
+        <p>This is a domain</p>
+        <p>{faithTables['domains'][(this.rollDie(11) - 1)]}</p>
       </div>
     )
   }
