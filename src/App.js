@@ -1,57 +1,78 @@
 import React, { Component } from 'react'
-import SearchBar from './SearchBar'
-import StockTable from './StockTable'
-import JSONInventory from './JSONInventory'
+import JSONGems from './JSONGems'
+import {ButtonToolbar, Button} from 'react-bootstrap'
 
 class App extends Component {
   constructor () {
     super()
     this.state = {
-      filterStocked: false,
-      searchString: '',
-      inCart: [],
-      priceTotal: 0
+      currentGem: 'pancakes'
     }
-    this.toggleFilterStocked = this.toggleFilterStocked.bind(this)
-    this.updateSearchString = this.updateSearchString.bind(this)
-    this.updateInCart = this.updateInCart.bind(this)
+    this.rollDie = this.rollDie.bind(this)
+    this.rollDice = this.rollDice.bind(this)
+    this.generateGem = this.generateGem.bind(this)
   }
-  toggleFilterStocked () {
-    this.setState({filterStocked: !this.state.filterStocked})
+  rollDie (die, modifier = 0) {
+    const min = Math.ceil(1)
+    const max = Math.floor(die)
+    return (Math.floor(Math.random() * (max - min + 1)) + min) + modifier
   }
-  updateSearchString (value) {
-    this.setState({searchString: value})
+  rollDice (number, die, modifier = 0) {
+    let runningTally = 0
+    for (let i = 0; i < number; i++) {
+      runningTally += this.rollDie(die)
+    }
+    return runningTally + modifier
   }
-
-  updateInCart (ItemName, ItemPrice) {
-    let workingCart = this.state.inCart
-    if (workingCart.indexOf(ItemName) === -1) {
-      workingCart.push(ItemName)
-      this.setState({priceTotal: this.state.priceTotal + ItemPrice})
+  generateGem () {
+    let gemClass
+    let gemName
+    let gemValue
+    // Step 1: figure out just how good of a gem it is.
+    let valueDie = this.rollDie(100)
+    if (valueDie < 26) {
+      gemClass = 0
+      gemValue = this.rollDice(4, 4)
+    } else if (valueDie < 51) {
+      gemClass = 1
+      gemValue = (this.rollDice(2, 4) * 10)
+    } else if (valueDie < 71) {
+      gemClass = 2
+      gemValue = (this.rollDice(4, 4) * 10)
+    } else if (valueDie < 91) {
+      gemClass = 3
+      gemValue = (this.rollDice(2, 4) * 100)
+    } else if (valueDie < 100) {
+      gemClass = 4
+      gemValue = (this.rollDice(4, 4) * 100)
+    } else if (valueDie === 100) {
+      gemClass = 5
+      gemValue = (this.rollDice(2, 4) * 1000)
+    }
+    // Step 2: Determine gem-place die, then roll it to determine gem type
+    let gemPlaceDie = JSONGems[gemClass].length
+    let gemPlace = (this.rollDie(gemPlaceDie) - 1)
+    if (Array.isArray(JSONGems[gemClass][gemPlace])) {
+      let gemVariableDie = JSONGems[gemClass][gemPlace].length
+      let gemVariable = (this.rollDie(gemVariableDie) - 1)
+      gemName = JSONGems[gemClass][gemPlace][gemVariable]
     } else {
-      let itemNameIndex = workingCart.indexOf(ItemName)
-      workingCart.splice(itemNameIndex, 1)
-      this.setState({priceTotal: this.state.priceTotal - ItemPrice})
+      gemName = JSONGems[gemClass][gemPlace]
     }
-    this.setState({workingCart})
+    // Step 3: Put it all together?
+    this.setState({currentGem: `A ${gemName} worth ${gemValue} gp`})
   }
-
   render () {
     return (
       <div>
-        <SearchBar
-          filterStocked={this.state.filterStocked}
-          handleFilterStockedToggle={this.toggleFilterStocked}
-          searchString={this.state.searchString}
-          handleSearchString={this.updateSearchString}
-            />
-        <StockTable
-          inventory={JSONInventory}
-          filterStocked={this.state.filterStocked}
-          searchString={this.state.searchString}
-          priceTotal={this.state.priceTotal}
-          updateInCart={this.updateInCart}
-            />
+        <p>Generate a random Gem!</p>
+        <Button
+          bsStyle='primary'
+          onClick={(event) => this.generateGem()}
+        >
+          'Gem Me Baby'
+        </Button>
+        <p>{this.state.currentGem}</p>
       </div>
     )
   }
