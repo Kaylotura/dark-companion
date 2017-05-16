@@ -31,9 +31,74 @@ const armors = [
   'Shield'
 ]
 
+
+
+const toolsTable = [
+  [
+    'Artisan Tools: Alchemist’s Supplies',
+    'Artisan Tools: Alchemist’s Supplies',
+    'Artisan Tools: Brewer’s Supplies',
+    'Artisan Tools: Calligrapher’s Supplies',
+    'Artisan Tools: Carpenter’s Tools',
+    'Artisan Tools: Cartographer’s Tools',
+    'Artisan Tools: Cobbler’s Tools',
+    'Artisan Tools: Cook’s Utensils',
+    'Artisan Tools: Glassblower’s Tools',
+    'Artisan Tools: Jeweler’s Tools',
+    'Artisan Tools: Leatherworker’s Tools',
+    'Artisan Tools: Mason’s Tools',
+    'Artisan Tools: Painters’s Supplies',
+    'Artisan Tools: Potter’s Tools',
+    'Artisan Tools: Smith’s Tools',
+    'Artisan Tools: Smith’s Tools',
+    'Artisan Tools: Tinker’s Tools',
+    'Artisan Tools: Tinker’s Tools',
+    'Artisan Tools: Weaver’s Tools',
+    'Artisan Tools: Woodcarver’s Tools',
+  ],
+  ['Disguise Kit'],
+  ['Forgery Kit'],
+  [
+    'Gaming Set: Dice Set',
+    'Gaming Set: Dragonchess Set',
+    'Gaming Set: Playing Card Set',
+    'Gaming Set: Three-Dragon Ante Set'
+  ],
+  ['Herbalism Kit'],
+  [
+    'Musical Instrument:Bagpipes',
+    'Musical Instrument:Drum',
+    'Musical Instrument:Dulcimer',
+    'Musical Instrument:Flute',
+    'Musical Instrument:Lute',
+    'Musical Instrument:Lyre',
+    'Musical Instrument:Horn',
+    'Musical Instrument:Pan Flute',
+    'Musical Instrument:Shawm',
+    'Musical Instrument: Viol'
+  ],
+  ['Navigator’s Tools'],
+  ['Poisoner’s Kit'],
+  ['Thieves’ Tools'],
+  [
+    'Vehicle: Carriage',
+    'Vehicle: Cart',
+    'Vehicle: Wheelbarrow',
+    'Vehicle: Chariot',
+    'Vehicle: Sled',
+    'Vehicle: Wagon',
+    'Vehicle: Galley',
+    'Vehicle: Keelboat',
+    'Vehicle: Longship',
+    'Vehicle: Rowboat',
+    'Vehicle: Sailing Ship',
+    'Vehicle: Warship'
+  ]
+]
+
 // This table represents [1d6: 1-4 Common Weapon, 5-6 Rare Weapon]
 // followed by 1d20 common  or rare weapon table, with a 1/3 chance of generating alternate weapon names
-let weaponsTable = [
+const weaponsTable = [
   {commonWeapons: [
     // repeat on shortsword intentional to make full 1d20 table and increase presence of short swords.
     ['Club', 'Club', 'Club', 'Club', 'Bian (Club)', 'Tonfa (Club)'],
@@ -45,7 +110,7 @@ let weaponsTable = [
     ['Mace', 'Mace', 'Mace', 'Mace', 'Kanabo (Mace)', 'Chui (Mace)'],
     ['Quarterstaff', 'Quarterstaff', 'Quarterstaff', 'Quarterstaff', 'Gun-staff (Quarterstaff)', 'Bo-Staff (Quarterstaff)'],
     ['Sickle', 'Sickle', 'Kama (Sickle)'],
-    ['Spear', 'Spear', 'Spear', 'Spear','Qiang (Spear)', 'Yari (Spear)'],
+    ['Spear', 'Spear', 'Spear', 'Spear', 'Qiang (Spear)', 'Yari (Spear)'],
     ['Light Crossbow'],
     ['Dart', 'Dart', 'Shuriken (Dart)'],
     ['Shortbow', 'Shortbow', 'Hankyu (Shortbow)'],
@@ -161,8 +226,9 @@ const gemTable = [
 
 const itemTables = {
   armors: armors,
-  gemTable: gemTable
+  gemTable: gemTable,
+  toolsTable: toolsTable,
+  weaponsTable: weaponsTable
 }
-
 
 export default itemTables
